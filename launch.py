@@ -1,29 +1,15 @@
-from os import system, name, path
+from os import system, path
 from sys import exit
 from json import load
 
-def clearConsole():
-    system("cls" if name in ["nt"] else "clear")
+from openutils import Console, Importer
 
-def safeImport(pack, packPypi: str = None):
-	if packPypi == None:
-		packPypi = pack
-	if name == "nt":
-		try:
-			exec(f"import {pack}")
-		except:
-			system(f"py -3 -m pip install {packPypi}")
-	else:
-		try:
-			exec(f"import {pack}")
-		except:
-			system(f"python3 -m pip install {packPypi}")
+console:Console = Console()
+importer:Importer = Importer()
 
-safeImport("flask")
-safeImport("requests")
-safeImport("waitress")
+importer.checkListInstalled(["flask","requests","waitress"])
 
-clearConsole()
+console.clear()
 
 print("Launching sequence completed!\nInitializing OpenStories...")
 
@@ -37,4 +23,12 @@ else:
 	print("Missing configuration file!\n- config.json")
 	exit()
 
-system(f"cd {proj_dir}/ && waitress-serve --listen={config['Web']['Host']}:{config['Web']['Port']} main:app")
+if __name__ == "__main__":
+	try:
+		system(f"cd {proj_dir}/ && waitress-serve --listen={config['Web']['Host']}:{config['Web']['Port']} main:app")
+	except KeyboardInterrupt:
+		console.clear()
+		print("OpenStories instance was terminated.")
+	except Exception:
+		console.clear()
+		print("OpenStories instance has closed unexpectedly.")
