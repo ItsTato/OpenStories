@@ -5,7 +5,7 @@ class Importer:
         self.__system:system = system
     def checkListInstalled(self,imports:list):
         for v in imports:
-            self.checkInstalled(v,v)
+            self.checkInstalled(v)
     def checkInstalled(self,importName:str,pypiName:str=""):
         if pypiName == "":
             pypiName:str = importName
@@ -13,7 +13,7 @@ class Importer:
             try:
                 exec(f"import {importName}")
             except ImportError:
-                self.__system(f"python -3 -m pip install {pypiName}")
+                self.__system(f"python -m pip install {pypiName}")
         else:
             try:
                 exec(f"import {importName}")
