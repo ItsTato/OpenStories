@@ -8,6 +8,7 @@ console:Console = Console()
 importer:Importer = Importer()
 
 importer.checkListInstalled(["flask","requests","waitress"])
+importer.checkInstalled(importName="dotenv",pypiName="python-dotenv")
 
 console.clear()
 
@@ -25,7 +26,7 @@ else:
 
 if __name__ == "__main__":
 	try:
-		system(f"cd {proj_dir}/ && waitress-serve --listen={config['Web']['Host']}:{config['Web']['Port']} main:app")
+		system(f"cd \"{proj_dir}\"/ && waitress-serve --listen={config['Web']['Host']}:{config['Web']['Port']} main:app")
 	except KeyboardInterrupt:
 		console.clear()
 		print("OpenStories instance was terminated.")
