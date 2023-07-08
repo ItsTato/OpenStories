@@ -47,7 +47,7 @@ class DiscordOAuth2:
 
     def patch_url(url:str) -> str:
         return url.replace(":","%3A").replace("/","%2F")
-    
+
     def formatScopes(self) -> str:
         final:str = ""
         for i, scope in enumerate(self.scopes):
